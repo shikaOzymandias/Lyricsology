@@ -1,0 +1,129 @@
+.header {
+  background-color: $bg-color;
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__logo {
+    display: block;
+    height: 3.5rem;
+    margin-left: 3rem;
+  }
+}
+
+.search {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  padding-left: 3rem;
+  border-radius: 3rem;
+  transition: all 0.5s;
+  &:focus-within {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.151);
+  }
+
+  &__field {
+    color: inherit;
+    border: none;
+    width: 30rem;
+    font-size: 1.7rem;
+    font-family: inherit;
+    transition: width 0.5s;
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $color-grey-light-3;
+    }
+  }
+
+  &__icon {
+    // margin-right: 1rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    fill: currentColor;
+  }
+
+  &__btn {
+    @extend %btn;
+
+    padding: 1rem 2rem;
+    font-weight: 400;
+    font-family: inherit;
+    &:hover {
+    }
+  }
+}
+
+.nav {
+  align-self: stretch;
+  margin-right: 2rem;
+  &__list {
+    list-style: none;
+    display: flex;
+    height: 100%;
+  }
+
+  &__item {
+    position: relative;
+  }
+
+  &__btn {
+    height: 100%;
+    justify-items: center;
+    font-family: inherit;
+    font-size: 1.5rem;
+    color: $color-grey-dark-2;
+    font-weight: 700;
+    padding: 0 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.8s;
+
+    display: flex;
+    align-items: center;
+    svg {
+      width: 2.4rem;
+      height: 2.4rem;
+      fill: $color-grad-2;
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      background-color: $color-grey-light-1;
+      color: $color-grey-dark-1;
+    }
+  }
+}
+
+.bookmarks {
+  padding: 1rem 0;
+  width: 40rem;
+  background-color: #fff;
+  position: absolute;
+  right: -5rem;
+  z-index: 10;
+  box-shadow: 0.8rem 0.8rem 5rem 2rem rgba($color-grey-dark-1, 0.1);
+
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s 0.2s;
+  &__list {
+    list-style: none;
+  }
+
+  // &__field {
+
+  // }
+
+  &:hover,
+  .nav__btn--bookmarks:hover + & {
+    visibility: visible;
+    opacity: 1;
+  }
+}

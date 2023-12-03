@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700"
+    />
+    <link
+      rel="shortcut icon"
+      href="src/img/logo-green-1x.png"
+      type="image x-icon"
+    />
+    <link rel="stylesheet" href="src/css/style.css" />
+
+    <script defer src="src/js/index.js"></script>
+
+    <title>Lyricsology // your safe place for discovering songs</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <img
+          src="src/img/logo-green-small-1x.png"
+          alt="logo"
+          class="header__logo"
+        />
+
+        <form class="search">
+          <input
+            type="text"
+            class="search__field"
+            placeholder="Search over 1,000,000 songs ..."
+          />
+          <button class="search__btn">
+            <svg class="search__icon">
+              <use href="src/img/icons.svg#icon-search"></use>
+            </svg>
+            <!-- <span>Search</span> -->
+          </button>
+        </form>
+
+        <nav class="nav">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <button class="nav__btn">
+                <svg class="nav__icon">
+                  <use href="src/img/icons.svg#icon-add-lyrics"></use>
+                </svg>
+                <span>Add Lyrics</span>
+              </button>
+            </li>
+
+            <li class="nav__item">
+              <button class="nav__btn nav__btn--bookmarks">
+                <svg class="nav__icon">
+                  <use href="src/img/icons.svg#icon-bookmark"></use>
+                </svg>
+                <span>Bookmarks</span>
+              </button>
+
+              <div class="bookmarks">
+                <ul class="bookmarks__list">
+                  <div class="message">
+                    <div>
+                      <svg>
+                        <use href="src/img/icons.svg#face-smile"></use>
+                      </svg>
+                    </div>
+                    <p>
+                      Hurry up! Bookmark your favorite lyrics and save it here
+                    </p>
+                  </div>
+
+                  <!-- <li class="preview">
+                    <a href="#" class="preview__link">
+                      <figure class="preview__img">
+                        <img src="src/img/test-1.jpg" alt="Test" />
+                      </figure>
+                      <div class="preview__data">
+                        <h3 class="preview__title">
+                          Test Lorem ipsum dolor sit amet consectetur
+                          adipisicing elit. Molestias voluptates tempore minima
+                          vitae voluptatum sequi at explicabo perspiciatis saepe
+                          ex impedit quibusdam sunt dolores, exercitationem
+                          nobis iusto dolore consectetur laboriosam.
+                        </h3>
+                        <p class="preview__artist">
+                          Lorem ipsum dolor sit amet.
+                        </p>
+                      </div>
+                    </a>
+                  </li> -->
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="search-results">
+        <ul class="results child-element">
+          <li class="preview">
+            <a href="#" class="preview__link">
+              <figure class="preview__img">
+                <img src="src/img/test-1.jpg" alt="Test" />
+              </figure>
+              <div class="preview__data">
+                <h3 class="preview__title">Test Lorem ipsum dolor</h3>
+                <p class="preview__artist">Lorem ipsum dolor sit amet.</p>
+              </div>
+            </a>
+          </li>
+          <li class="preview">
+            <a href="#" class="preview__link">
+              <figure class="preview__img">
+                <img src="src/img/test-1.jpg" alt="Test" />
+              </figure>
+              <div class="preview__data">
+                <h3 class="preview__title">Test Lorem ipsum dolor</h3>
+                <p class="preview__artist">Lorem ipsum dolor sit amet.</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+
+        <div class="pagination">
+          <ul class="pages">
+            <button class="pages__btn pagination__btn--prev">
+              <svg>
+                <use href="src/img/icons.svg#caret-left"></use>
+              </svg>
+            </button>
+            <li><a class="pages__numbers active" href="#">1</a></li>
+            <li><a class="pages__numbers" href="#">2</a></li>
+            <li class="pages__dots">...</li>
+            <li><a class="pages__numbers" href="#">3</a></li>
+            <button class="pages__btn pagination__btn--next">
+              <svg>
+                <use href="src/img/icons.svg#caret-right"></use>
+              </svg>
+            </button>
+          </ul>
+        </div>
+      </div>
+
+      <div class="music">
+        <!-- <section class="section-about">
+          <div class="u-center-text u-margin-bottom-medium">
+            <h1 class="heading-primary lyricsoligy-text-color">
+              Welcome to Lyricsology<br />
+              Where Lyrics Come to Life
+            </h1>
+          </div>
+          <p class="paragraph">
+            Love music? Me too!
+            <span class="lyricsoligy-text-color">Lyricsology</span> is here to
+            make exploring lyrics easy and fun. Whether you're into pop, rock,
+            or anything in between, we've got your lyrics covered.
+          </p>
+
+          <h2 class="heading-secondary u-margin-bottom-small">
+            What We Offer:
+          </h2>
+          <p class="paragraph">
+            🔎 <strong>Music Search:</strong><br />Find lyrics of your favorite
+            songs in a snap.
+          </p>
+          <p class="paragraph">
+            🌟 <strong>Discover New Tunes:</strong><br />Dive into fresh tracks
+            and old favorites, all in one place.
+          </p>
+
+          <p class="paragraph">
+            🎭<strong>Know the Story:</strong><br />Ever wondered what your
+            favorite songs are really about? We've got the stories behind the
+            lyrics.
+          </p>
+          <p class="paragraph">
+            📋<strong>Create Your Bookmark:</strong><br />
+            Make your own playlists for every mood, occasion, or just because.
+          </p>
+          <p class="paragraph u-center-text">
+            Ready to dive into the world of lyrics?<br />Let's Start by
+            searching for a song title or an artst name. Have fun!
+          </p>
+        </section> -->
+
+        <div class="error">
+          <div>
+            <svg class="error__icon">
+              <use href="src/img/icons.svg#triangle-exclamation"></use>
+            </svg>
+          </div>
+
+          <p>No recipes found for your query. Please try again!</p>
+        </div>
+        <!-- <div class="music__message">
+          <h2>Welcome to Lyricsology - Where Lyrics Come to Life</h2>
+
+          <p>
+            Love music? Us too! Lyricsology is here to make exploring lyrics
+            easy and fun. Whether you're into pop, rock, or anything in between,
+            we've got your lyrics covered.
+          </p>
+
+          <h2>What We Offer:</h2>
+          <ul>
+            <li>
+              🎵 <strong>Lyric Search:</strong> Find the words to your favorite
+              songs in a snap.
+            </li>
+            <li>
+              🌟 <strong>Discover New Tunes:</strong> Dive into fresh tracks and
+              old favorites, all in one place.
+            </li>
+            <li>
+              📖 <strong>Know the Story:</strong> Ever wondered what your
+              favorite songs are really about? We've got the scoop on the
+              stories behind the lyrics.
+            </li>
+            <li>
+              🎧 <strong>Create Your Playlist:</strong> Make your own playlists
+              for every mood, occasion, or just because.
+            </li>
+          </ul>
+
+          <p>Ready to dive into the world of lyrics? Let's get started!</p>
+        </div> -->
+      </div>
+    </div>
+  </body>
+</html>

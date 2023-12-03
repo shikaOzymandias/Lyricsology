@@ -1,0 +1,72 @@
+$color-primary: #007c7c;
+$color-grad-1: #ffd700;
+$color-grad-2: #008080;
+
+$color-grey-dark: #777;
+$color-black: #000;
+$color-white: #fff;
+$bg-color: #eceaea;
+
+$color-grey-light-1: #f9f5f3; // Light background
+$color-grey-light-2: #f2efee; // Light lines
+$color-grey-light-3: #d3c7c3; // Light text (placeholder)
+$color-grey-dark-1: #615551; // Normal text
+$color-grey-dark-2: #918581; // Lighter text
+
+$gradient: linear-gradient(to bottom right, $color-grad-1, $color-grad-2);
+
+$bp-large: 78.15em; // 1250px
+$bp-medium: 61.25em; // 980px
+$bp-small: 37.5em; // 600px
+$bp-smallest: 31.25em; // 500px
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; //62.5% of default font-size it means 10px
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-image: $gradient;
+  min-height: calc(100vh - 2 * 4vw);
+  color: $color-grey-dark-1;
+}
+
+.container {
+  border-radius: 10px;
+  background-color: $color-white;
+
+  max-width: 120rem;
+  min-height: 117rem;
+  margin: 4vw auto;
+  overflow: hidden;
+  box-shadow: 0 2rem 6rem 0.5rem rgba(61, 61, 61, 0.2);
+
+  display: grid;
+  grid-template-rows: 10rem minmax(100rem, auto);
+  grid-template-columns: 2fr 4fr;
+  grid-template-areas:
+    "header header"
+    "list music";
+
+  @media only screen and (max-width: $bp-large) {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+}
