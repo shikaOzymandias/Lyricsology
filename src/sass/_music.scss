@@ -29,6 +29,7 @@
 .section-about {
   padding: 3rem 5rem;
 }
+
 .lyricsoligy-text-color {
   background-image: linear-gradient(to right, $color-grad-1, $color-grad-2);
   -webkit-background-clip: text;
@@ -47,6 +48,7 @@
   text-transform: uppercase;
 }
 .paragraph {
+  font-weight: 500;
   font-size: 1.6rem;
   &:not(:last-child) {
     margin-bottom: 2rem;
