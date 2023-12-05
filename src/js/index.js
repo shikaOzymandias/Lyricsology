@@ -1,35 +1,17 @@
-// const maindev = document.getElementById("main");
-// console.log(maindev);
-// const showLyrics = async function (){
-//     try{
-//         const lyric = await fetch('http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?artist=michael%20jackson&song=bad');
-//         const parseData = await lyric.text();
-//         let data = new window.DOMParser().parseFromString(parseData, "text/xml");
+const urlApi = "https://api.musixmatch.com/ws/1.1/";
+const apiKey = "8a497867c325bbcf4b4c9d286f8450bb";
+let encodedString = encodeURIComponent("tool sober");
+const searchUrl = `${urlApi}track.search?q_track_artist=${encodedString}&page_size=5&page=1&apikey=${apiKey}&s_track_rating=DESC`;
 
-//         console.log(lyric,"+",data);
-//     }catch(err){
-//         console.log(err);
-//     }
-// };
+const searchTrack = async function () {
+  try {
+    const res = await fetch(searchUrl);
+    const data = await res.json();
 
-// showLyrics();
-
-const apiKey =
-  "q6Ya5C5zFjmCQLqotRwhgD8WSBV3v8An_1nJUptK0kCFltrf-ig1jJJF3aE9SV9Y";
-const url = "https://api.genius.com";
-const searchUrl = `${url}/search?q=tool%20Sober&access_token=${apiKey}`;
-// const options = {
-// 	method: 'GET',
-// 	headers: {
-// 		'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
-// 		'X-RapidAPI-Host': 'billboard-api2.p.rapidapi.com'
-// 	}
-// };
-const showLyrics = async function () {
-  const res = await fetch(`${searchUrl}`);
-  const data = await res.json();
-
-  console.log(data);
+    console.log(data);
+  } catch (error) {
+    console.error("Error:", error);
+  }
 };
 
-showLyrics();
+searchTrack();
