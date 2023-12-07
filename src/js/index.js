@@ -1,16 +1,14 @@
 const API_URL = "https://api.musixmatch.com/ws/1.1/";
 const apiKey = "8a497867c325bbcf4b4c9d286f8450bb";
 let encodedString = encodeURIComponent("Tool sober");
-let commontrackId = "148529";
-const trackGet = "track.get?commontrack_id=";
-const trackSearch = "track.search?q_track_artist=";
 
-// for trackGet we use this:
-
-// const API_URL = `${urlApi}${trackGet}${commontrackId}&page_size=5&page=1&apikey=${apiKey}&s_track_rating=DESC`;
-
-// for trackSearch we use this :
-// const API_URL = `${urlApi}${trackSearch}${encodedString}&page_size=5&page=1&apikey=${apiKey}&s_track_rating=DESC`;
+const state = {
+  music: {},
+  search: {
+    query: "",
+    results: [],
+  },
+};
 
 const getJSON = async function (url) {
   try {
@@ -31,9 +29,9 @@ const getJSON = async function (url) {
 
 const loadLyrics = async function (commontrackId) {
   try {
-    const data =
-      await getJSON(`${API_URL}track.lyrics.get?commontrack_id=${commontrackId}&apikey=${apiKey}
-    `);
+    const data = await getJSON(
+      `${API_URL}track.lyrics.get?commontrack_id=${commontrackId}&apikey=${apiKey}`
+    );
 
     console.log(data);
   } catch (err) {
@@ -45,10 +43,25 @@ const loadLyrics = async function (commontrackId) {
 
 const loadSearchResults = async function (query) {
   try {
+    state.search.query = query;
     const data =
-      await getJSON(`${API_URL}track.search?q_track_artist=${query}&page_size=10&page=1&apikey=${apiKey}&s_track_rating=DESC
+      await getJSON(`${API_URL}track.search?q_track_artist=${query}&page_size=3&page=1&apikey=${apiKey}&s_track_rating=DESC
     `);
-    console.log(data);
+
+    state.search.results = data.message.body.track_list.map(({ track }) => {
+      return {
+        trackId: track.track_id,
+        trackName: track.track_name,
+        commontrackId: track.commontrack_id,
+        hasLyrics: track.has_lyrics,
+        numFavourite: track.num_favourite,
+        albumName: track.album_name,
+        artistName: track.artist_name,
+      };
+    });
+
+    console.log(data.message.body.track_list);
+    console.log(state.search.results);
   } catch (err) {
     console.error(err);
   }
