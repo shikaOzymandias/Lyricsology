@@ -1,5 +1,6 @@
 const API_URL = "https://api.musixmatch.com/ws/1.1/";
 const apiKey = "8a497867c325bbcf4b4c9d286f8450bb";
+const searchForm = document.querySelector(".search");
 let encodedString = encodeURIComponent("Tool sober");
 
 const state = {
@@ -27,6 +28,10 @@ const getJSON = async function (url) {
   }
 };
 
+const getQuery = async function () {
+  return document.querySelector(".search__field").value;
+};
+
 const loadLyrics = async function (commontrackId) {
   try {
     const data = await getJSON(
@@ -41,8 +46,11 @@ const loadLyrics = async function (commontrackId) {
 
 // loadLyrics(commontrackId);
 
-const loadSearchResults = async function (query) {
+const loadSearchResults = async function () {
   try {
+    const query = await getQuery();
+    if (!query) return;
+
     state.search.query = query;
     const data =
       await getJSON(`${API_URL}track.search?q_track_artist=${query}&page_size=3&page=1&apikey=${apiKey}&s_track_rating=DESC
@@ -62,9 +70,13 @@ const loadSearchResults = async function (query) {
 
     console.log(data.message.body.track_list);
     console.log(state.search.results);
+    console.log(query);
   } catch (err) {
     console.error(err);
   }
 };
 
-loadSearchResults("pink floyd");
+searchForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  loadSearchResults();
+});
