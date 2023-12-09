@@ -1,6 +1,7 @@
 const API_URL = "https://api.musixmatch.com/ws/1.1/";
 const apiKey = "8a497867c325bbcf4b4c9d286f8450bb";
 const searchForm = document.querySelector(".search");
+const searchInputText = document.querySelector(".search__field");
 let encodedString = encodeURIComponent("Tool sober");
 
 const state = {
@@ -29,7 +30,9 @@ const getJSON = async function (url) {
 };
 
 const getQuery = async function () {
-  return document.querySelector(".search__field").value;
+  const query = searchInputText.value;
+  searchInputText.value = "";
+  return query;
 };
 
 const loadLyrics = async function (commontrackId) {
@@ -48,10 +51,13 @@ const loadLyrics = async function (commontrackId) {
 
 const loadSearchResults = async function () {
   try {
+    // Get search query
     const query = await getQuery();
     if (!query) return;
 
+    // Put search query in state.search
     state.search.query = query;
+
     const data =
       await getJSON(`${API_URL}track.search?q_track_artist=${query}&page_size=3&page=1&apikey=${apiKey}&s_track_rating=DESC
     `);
@@ -68,7 +74,7 @@ const loadSearchResults = async function () {
       };
     });
 
-    console.log(data.message.body.track_list);
+    // Render results
     console.log(state.search.results);
     console.log(query);
   } catch (err) {
@@ -78,5 +84,7 @@ const loadSearchResults = async function () {
 
 searchForm.addEventListener("submit", function (e) {
   e.preventDefault();
+
+  // Loading saerch result
   loadSearchResults();
 });
