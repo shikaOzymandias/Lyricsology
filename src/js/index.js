@@ -2,6 +2,8 @@ const API_URL = "https://api.musixmatch.com/ws/1.1/";
 const apiKey = "8a497867c325bbcf4b4c9d286f8450bb";
 const searchForm = document.querySelector(".search");
 const searchInputText = document.querySelector(".search__field");
+const searchResultView = document.querySelector(".results");
+
 let encodedString = encodeURIComponent("Tool sober");
 
 const state = {
@@ -62,6 +64,7 @@ const loadSearchResults = async function () {
       await getJSON(`${API_URL}track.search?q_track_artist=${query}&page_size=3&page=1&apikey=${apiKey}&s_track_rating=DESC
     `);
 
+    // Refactoring search result
     state.search.results = data.message.body.track_list.map(({ track }) => {
       return {
         trackId: track.track_id,
@@ -74,9 +77,26 @@ const loadSearchResults = async function () {
       };
     });
 
+    const resultMarkup = state.search.results
+      .map(
+        (track) => `
+      <li class="preview">
+        <a href="#" class="preview__link">
+          <figure class="preview__img">
+            <img src="src/img/test-1.jpg" alt="Test" />
+          </figure>
+          <div class="preview__data">
+            <h3 class="preview__title">${track.trackName}</h3>
+            <p class="preview__artist">${track.artistName}</p>
+          </div>
+        </a>
+      </li>
+    `
+      )
+      .join("");
+    console.log(resultMarkup);
     // Render results
-    console.log(state.search.results);
-    console.log(query);
+    searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
   } catch (err) {
     console.error(err);
   }
