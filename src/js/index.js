@@ -37,6 +37,14 @@ const getQuery = async function () {
   return query;
 };
 
+const renderSpinner = async function (parentElement) {
+  const markup = `
+  <div class="u-margin-top-big spinner"></div>
+  `;
+  parentElement.innerHTML = "";
+  parentElement.insertAdjacentHTML("afterbegin", markup);
+};
+
 const loadLyrics = async function (commontrackId) {
   try {
     const data = await getJSON(
@@ -62,7 +70,7 @@ const loadSearchResults = async function () {
 
     const data =
       await getJSON(`${API_URL}track.search?q_track_artist=${query}&page_size=3&page=1&apikey=${apiKey}&s_track_rating=DESC
-    `);
+      `);
 
     // Refactoring search result
     state.search.results = data.message.body.track_list.map(({ track }) => {
@@ -86,15 +94,16 @@ const loadSearchResults = async function () {
             <img src="src/img/test-1.jpg" alt="Test" />
           </figure>
           <div class="preview__data">
-            <h3 class="preview__title">${track.trackName}</h3>
-            <p class="preview__artist">${track.artistName}</p>
+          <h3 class="preview__title">${track.trackName}</h3>
+          <p class="preview__artist">${track.artistName}</p>
           </div>
-        </a>
-      </li>
-    `
+          </a>
+          </li>
+          `
       )
       .join("");
-    console.log(resultMarkup);
+    // Emptying result history
+    searchResultView.innerHTML = "";
     // Render results
     searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
   } catch (err) {
