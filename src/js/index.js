@@ -63,17 +63,55 @@ const renderError = function (parentElement, message = errorMessage) {
 
 const loadLyrics = async function (commontrackId) {
   try {
-    const data = await getJSON(
+    // taking lyrics data
+    const lyricsData = await getJSON(
       `${API_URL}track.lyrics.get?commontrack_id=${commontrackId}&apikey=${apiKey}`
     );
-
+    // taking track data
+    const data = await getJSON(
+      `${API_URL}track.get?commontrack_id=${commontrackId}&apikey=${apiKey}`
+    );
     console.log(data);
+    // Reformating lyricsData
+    let { lyrics } = lyricsData.message.body;
+    lyrics = {
+      id: lyrics.lyrics_id,
+      Body: lyrics.lyrics_body,
+      script: lyrics.script_tracking_url,
+      imagePixel: lyrics.pixel_tracking_url,
+      copyright: lyrics.lyrics_copyright,
+      updatedTime: lyrics.updated_time,
+    };
+
+    console.log(lyrics);
+
+    // Reformating track data
+    let { track } = data.message.body;
+    track = {
+      id: track.track_id,
+      title: track.track_name,
+      commontrackId: track.commontrack_id,
+      hasLyrics: track.has_lyrics,
+      explicit: track.explicit,
+      favourite: track.num_favourite,
+      albumId: track.album_id,
+      albumName: track.album_name,
+      artistId: track.artist_id,
+      artistName: track.artistName,
+      updatedTime: track.updated_time,
+      updatedTime: track.updated_time,
+      genre:
+        track.primary_genres.music_genre_list[0].music_genre.music_genre_name,
+      genres: track.primary_genres.music_genre_list,
+    };
+
+    console.log(track);
   } catch (err) {
     console.error(`${err} 🏀🏀🏀`);
   }
 };
 
-// loadLyrics(commontrackId);
+loadLyrics("93911869");
 
 const loadSearchResults = async function () {
   try {
@@ -89,7 +127,7 @@ const loadSearchResults = async function () {
     const data =
       await getJSON(`${API_URL}track.search?q_track_artist=${query}&page_size=7&page=1&apikey=${apiKey}&s_track_rating=DESC
       `);
-
+    if (!data) return renderError(searchResultView);
     // Refactoring search result and pushing in state
     state.search.results = data.message.body.track_list.map(({ track }) => {
       return {
