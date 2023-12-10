@@ -368,6 +368,9 @@ body {
 
 .section-about {
   padding: 3rem 5rem; }
+  .section-about__img {
+    width: 3rem;
+    height: 3rem; }
 
 .lyricsoligy-text-color {
   background-image: linear-gradient(to right, #ffd700, #008080);

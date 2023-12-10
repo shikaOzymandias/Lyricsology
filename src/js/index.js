@@ -63,6 +63,8 @@ const renderError = function (parentElement, message = errorMessage) {
 
 const loadLyrics = async function (commontrackId) {
   try {
+    // 1) Loading Lyrics and Music data
+
     // taking lyrics data
     const lyricsData = await getJSON(
       `${API_URL}track.lyrics.get?commontrack_id=${commontrackId}&apikey=${apiKey}`
@@ -76,7 +78,7 @@ const loadLyrics = async function (commontrackId) {
     let { lyrics } = lyricsData.message.body;
     lyrics = {
       id: lyrics.lyrics_id,
-      Body: lyrics.lyrics_body,
+      body: lyrics.lyrics_body,
       script: lyrics.script_tracking_url,
       imagePixel: lyrics.pixel_tracking_url,
       copyright: lyrics.lyrics_copyright,
@@ -99,13 +101,32 @@ const loadLyrics = async function (commontrackId) {
       artistId: track.artist_id,
       artistName: track.artistName,
       updatedTime: track.updated_time,
-      updatedTime: track.updated_time,
       genre:
         track.primary_genres.music_genre_list[0].music_genre.music_genre_name,
       genres: track.primary_genres.music_genre_list,
     };
 
     console.log(track);
+    // 2) Rendering Lyrics and Music info
+
+    const markup = `
+        <section class="section-about">
+          <h1 class="u-center-text u-margin-bottom-medium heading-primary lyricsoligy-text-color">
+            welcome to Lyricsology<br />Where Lyrics Come to Life
+          </h1>
+
+          <p class="paragraph">IdTrack: ${track.id}</p>
+          <p class="paragraph">Artist: ${track.artistName}</p>
+          <p class="paragraph">Title: ${track.title}</p>
+          <p class="paragraph">Album: ${track.albumName}</p>
+          <p class="paragraph">Fav: ${track.favourite}</p>
+          <p class="paragraph">LastUpdated: ${track.updatedTime}</p>
+          <p class="paragraph">Genre: ${track.genre}</p>
+          <p class="paragraph">Lyrics: ${lyrics.body}</p>
+          <p class="paragraph">CopyRight: ${lyrics.copyright}</p>
+          <img class="section-about__img" src="${lyrics.imagePixel}" alt="image pixel" />
+        </section>
+    `;
   } catch (err) {
     console.error(`${err} 🏀🏀🏀`);
   }
