@@ -1,5 +1,6 @@
 const API_URL = "https://api.musixmatch.com/ws/1.1/";
 const apiKey = "8a497867c325bbcf4b4c9d286f8450bb";
+const errorMessage = "We couldn't find lyrics. try something else ...";
 const searchForm = document.querySelector(".search");
 const searchInputText = document.querySelector(".search__field");
 const searchResultView = document.querySelector(".results");
@@ -31,15 +32,30 @@ const getJSON = async function (url) {
   }
 };
 
-const getQuery = async function () {
+const getQuery = function () {
   const query = searchInputText.value;
   searchInputText.value = "";
   return query;
 };
 
-const renderSpinner = async function (parentElement) {
+const renderSpinner = function (parentElement) {
   const markup = `
   <div class="u-margin-top-big spinner"></div>
+  `;
+  parentElement.innerHTML = "";
+  parentElement.insertAdjacentHTML("afterbegin", markup);
+};
+
+const renderError = function (parentElement, message = errorMessage) {
+  const markup = `
+          <div class="error">
+            <div>
+              <svg>
+                <use href="src/img/icons.svg#triangle-exclamation"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>
   `;
   parentElement.innerHTML = "";
   parentElement.insertAdjacentHTML("afterbegin", markup);
@@ -61,18 +77,20 @@ const loadLyrics = async function (commontrackId) {
 
 const loadSearchResults = async function () {
   try {
-    // Get search query
+    renderSpinner(searchResultView);
+
+    // 1) Get search query
     const query = await getQuery();
     if (!query) return;
 
-    // Put search query in state.search
+    // 2) Load Search Results
     state.search.query = query;
 
     const data =
-      await getJSON(`${API_URL}track.search?q_track_artist=${query}&page_size=3&page=1&apikey=${apiKey}&s_track_rating=DESC
+      await getJSON(`${API_URL}track.search?q_track_artist=${query}&page_size=7&page=1&apikey=${apiKey}&s_track_rating=DESC
       `);
 
-    // Refactoring search result
+    // Refactoring search result and pushing in state
     state.search.results = data.message.body.track_list.map(({ track }) => {
       return {
         trackId: track.track_id,
@@ -85,11 +103,13 @@ const loadSearchResults = async function () {
       };
     });
 
+    // 3. Render Search Results
+
     const resultMarkup = state.search.results
       .map(
         (track) => `
       <li class="preview">
-        <a href="#" class="preview__link">
+        <a href="#${track.commontrackId}" class="preview__link">
           <figure class="preview__img">
             <img src="src/img/test-1.jpg" alt="Test" />
           </figure>
@@ -102,12 +122,16 @@ const loadSearchResults = async function () {
           `
       )
       .join("");
+
+    console.log(state.search.results);
+
     // Emptying result history
     searchResultView.innerHTML = "";
     // Render results
     searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
   } catch (err) {
     console.error(err);
+    renderError(searchResultView, `${err}`);
   }
 };
 
