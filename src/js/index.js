@@ -4,7 +4,7 @@ const errorMessage = "We couldn't find lyrics. try something else ...";
 const searchForm = document.querySelector(".search");
 const searchInputText = document.querySelector(".search__field");
 const searchResultView = document.querySelector(".results");
-
+const trackContainer = document.querySelector(".music");
 let encodedString = encodeURIComponent("Tool sober");
 
 const state = {
@@ -61,19 +61,29 @@ const renderError = function (parentElement, message = errorMessage) {
   parentElement.insertAdjacentHTML("afterbegin", markup);
 };
 
-const loadLyrics = async function (commontrackId) {
+const loadLyrics = async function () {
   try {
+    // Taking id track and putting in id
+
+    const id = window.location.hash.slice(1);
+    console.log(id);
+
     // 1) Loading Lyrics and Music data
+
+    // Spinner
+    renderSpinner(trackContainer);
 
     // taking lyrics data
     const lyricsData = await getJSON(
-      `${API_URL}track.lyrics.get?commontrack_id=${commontrackId}&apikey=${apiKey}`
+      `${API_URL}track.lyrics.get?commontrack_id=${id}&apikey=${apiKey}`
     );
+
     // taking track data
     const data = await getJSON(
-      `${API_URL}track.get?commontrack_id=${commontrackId}&apikey=${apiKey}`
+      `${API_URL}track.get?commontrack_id=${id}&apikey=${apiKey}`
     );
     console.log(data);
+
     // Reformating lyricsData
     let { lyrics } = lyricsData.message.body;
     lyrics = {
@@ -99,7 +109,7 @@ const loadLyrics = async function (commontrackId) {
       albumId: track.album_id,
       albumName: track.album_name,
       artistId: track.artist_id,
-      artistName: track.artistName,
+      artistName: track.artist_name,
       updatedTime: track.updated_time,
       genre:
         track.primary_genres.music_genre_list[0].music_genre.music_genre_name,
@@ -127,12 +137,13 @@ const loadLyrics = async function (commontrackId) {
           <img class="section-about__img" src="${lyrics.imagePixel}" alt="image pixel" />
         </section>
     `;
+
+    trackContainer.innerHTML = "";
+    trackContainer.insertAdjacentHTML("afterbegin", markup);
   } catch (err) {
     console.error(`${err} 🏀🏀🏀`);
   }
 };
-
-loadLyrics("93911869");
 
 const loadSearchResults = async function () {
   try {
@@ -200,3 +211,5 @@ searchForm.addEventListener("submit", function (e) {
   // Loading saerch result
   loadSearchResults();
 });
+
+window.addEventListener("hashchange", loadLyrics);
