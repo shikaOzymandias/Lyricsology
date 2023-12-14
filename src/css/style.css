@@ -31,7 +31,7 @@ body {
   box-shadow: 0 2rem 6rem 0.5rem rgba(61, 61, 61, 0.2);
   display: grid;
   grid-template-rows: 10rem minmax(100rem, auto);
-  grid-template-columns: 2fr 4fr;
+  grid-template-columns: 1fr 3fr;
   grid-template-areas: "header header" "list music"; }
   @media only screen and (max-width: 78.15em) {
     .container {
@@ -364,7 +364,47 @@ body {
 
 .music {
   background-color: #eceaea;
-  grid-area: music; }
+  grid-area: music;
+  position: relative; }
+  .music .artist {
+    height: 40rem;
+    position: relative; }
+    .music .artist::before {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-image: linear-gradient(to right bottom, #ffd700, #008080);
+      opacity: 0.6; }
+    .music .artist__image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover; }
+  .music__details {
+    display: flex;
+    padding: 1rem 2rem;
+    position: absolute;
+    top: 32rem;
+    align-items: last end; }
+  .music__image {
+    border-radius: 30%;
+    width: 20rem;
+    box-shadow: -1rem -1rem 2rem -6px rgba(0, 0, 0, 0.2); }
+  .music__info {
+    padding: 1rem 1rem;
+    font-size: 1.7rem;
+    color: #000;
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 1px; }
+    .music__info > :first-child {
+      font-size: 6.2rem;
+      font-weight: 700;
+      letter-spacing: -3px; }
 
 .section-about {
   padding: 3rem 5rem; }

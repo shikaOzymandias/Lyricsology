@@ -125,49 +125,6 @@ const loadLyrics = async function () {
       genres: track.primary_genres.music_genre_list,
     };
 
-    /*
-    {
-    "annotation_count": 0,
-    "api_path": "/songs/5192067",
-    "artist_names": "Four Tet",
-    "full_title": "School by Four Tet",
-    "header_image_thumbnail_url": "https://images.genius.com/6c7166f0e2402f07bac72605f935e4b6.300x300x1.png",
-    "header_image_url": "https://images.genius.com/6c7166f0e2402f07bac72605f935e4b6.1000x1000x1.png",
-    "id": 5192067,
-    "lyrics_owner_id": 126836,
-    "lyrics_state": "complete",
-    "path": "/Four-tet-school-lyrics",
-    "pyongs_count": null,
-    "relationships_index_url": "https://genius.com/Four-tet-school-sample",
-    "release_date_components": {
-        "year": 2020,
-        "month": 3,
-        "day": 13
-    },
-    "release_date_for_display": "March 13, 2020",
-    "release_date_with_abbreviated_month_for_display": "Mar. 13, 2020",
-    "song_art_image_thumbnail_url": "https://images.genius.com/6c7166f0e2402f07bac72605f935e4b6.300x300x1.png",
-    "song_art_image_url": "https://images.genius.com/6c7166f0e2402f07bac72605f935e4b6.1000x1000x1.png",
-    "stats": {
-        "unreviewed_annotations": 0,
-        "hot": false
-    },
-    "title": "School",
-    "title_with_featured": "School",
-    "url": "https://genius.com/Four-tet-school-lyrics",
-    "featured_artists": [],
-    "primary_artist": {
-        "api_path": "/artists/126879",
-        "header_image_url": "https://images.genius.com/758d5b9bd6bd73589a71191e91be6ead.1000x623x1.jpg",
-        "id": 126879,
-        "image_url": "https://images.genius.com/da67b89ca36c1821f5627438df89a1e5.1000x1000x1.jpg",
-        "is_meme_verified": false,
-        "is_verified": false,
-        "name": "Four Tet",
-        "url": "https://genius.com/artists/Four-tet"
-    }
-}
-    */
     // genuis api
 
     const searchUrl = `https://api.genius.com/search?q=${encodeURIComponent(
@@ -177,7 +134,7 @@ const loadLyrics = async function () {
     const resGen = await fetch(searchUrl);
     const dataGen = await resGen.json();
     let { result } = dataGen.response.hits[0];
-
+    console.log(result);
     result = {
       headerThumbnail: result.header_image_thumbnail_url,
       headerImage: result.header_image_url,
