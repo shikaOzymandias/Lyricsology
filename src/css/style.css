@@ -387,9 +387,8 @@ body {
   .music__details {
     display: flex;
     padding: 1rem 2rem;
-    position: absolute;
-    top: 32rem;
-    align-items: last end; }
+    flex-direction: row;
+    align-items: end; }
   .music__image {
     border-radius: 30%;
     width: 20rem;
@@ -405,6 +404,19 @@ body {
       font-size: 6.2rem;
       font-weight: 700;
       letter-spacing: -3px; }
+  .music__lyrics {
+    background-color: #f2efee;
+    color: #615551;
+    padding: 5rem 4rem;
+    margin: 0 17rem;
+    margin-bottom: 13rem;
+    text-align: center;
+    line-height: 5rem;
+    letter-spacing: 1px;
+    text-transform: capitalize; }
+    .music__lyrics small {
+      background-color: #918581;
+      color: #f2efee; }
 
 .section-about {
   padding: 3rem 5rem; }

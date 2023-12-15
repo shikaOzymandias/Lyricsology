@@ -56,9 +56,11 @@
   &__details {
     display: flex;
     padding: 1rem 2rem;
-    position: absolute;
-    top: 32rem;
-    align-items: last end;
+    // for bringing it up, problem i .music__lyrics will come up too
+    // position: absolute;
+    // top: 32rem;
+    flex-direction: row;
+    align-items: end;
   }
 
   &__image {
@@ -74,10 +76,28 @@
     font-weight: 500;
     text-transform: capitalize;
     letter-spacing: 1px;
+
     & > :first-child {
       font-size: 6.2rem;
       font-weight: 700;
       letter-spacing: -3px;
+    }
+  }
+
+  &__lyrics {
+    background-color: $color-grey-light-2;
+    color: $color-grey-dark-1;
+    padding: 5rem 4rem;
+    margin: 0 17rem;
+    margin-bottom: 13rem;
+    text-align: center;
+    line-height: 5rem;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+
+    small {
+      background-color: $color-grey-dark-2;
+      color: $color-grey-light-2;
     }
   }
 }
