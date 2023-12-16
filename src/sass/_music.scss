@@ -94,11 +94,11 @@
     line-height: 5rem;
     letter-spacing: 1px;
     text-transform: capitalize;
-
-    small {
-      background-color: $color-grey-dark-2;
-      color: $color-grey-light-2;
-    }
+  }
+  &__copyright {
+    display: inline;
+    background-color: $color-primary;
+    color: $color-grey-light-2;
   }
 }
 

@@ -414,9 +414,10 @@ body {
     line-height: 5rem;
     letter-spacing: 1px;
     text-transform: capitalize; }
-    .music__lyrics small {
-      background-color: #918581;
-      color: #f2efee; }
+  .music__copyright {
+    display: inline;
+    background-color: #007c7c;
+    color: #f2efee; }
 
 .section-about {
   padding: 3rem 5rem; }
