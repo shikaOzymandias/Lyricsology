@@ -78,7 +78,8 @@
     letter-spacing: 1px;
 
     & > :first-child {
-      font-size: 6.2rem;
+      font-size: 5.2rem;
+
       font-weight: 700;
       letter-spacing: -3px;
     }
@@ -91,23 +92,33 @@
     margin: 0 17rem;
     margin-bottom: 13rem;
     text-align: center;
-    line-height: 5rem;
+    line-height: 4rem;
     letter-spacing: 1px;
     text-transform: capitalize;
+
+    &--body {
+      white-space: pre-line;
+    }
   }
   &__copyright {
-    display: inline;
-    background-color: $color-primary;
-    color: $color-grey-light-2;
+    display: inline-block;
+    font-size: 1.3rem;
+    // background-color: $color-primary;
+    // color: $color-grey-light-2;
+    font-weight: 700;
+    // text-transform: uppercase;
+    // line-height: 1.8rem;
+  }
+
+  &__image-pixel {
+    display: none;
+    width: 3rem;
+    height: 3rem;
   }
 }
 
 .section-about {
   padding: 3rem 5rem;
-  &__img {
-    width: 3rem;
-    height: 3rem;
-  }
 }
 
 .lyricsoligy-text-color {

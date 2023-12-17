@@ -52,9 +52,10 @@ const renderError = function (parentElement, message = errorMessage) {
   const markup = `
           <div class="error">
             <div>
-              <svg>
-                <use href="src/img/icons.svg#triangle-exclamation"></use>
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" class="svg-icon" style="color:#e40000;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+          </svg>
+          
             </div>
             <p>${message}</p>
           </div>
@@ -138,7 +139,7 @@ const loadLyrics = async function () {
     result = {
       headerThumbnail: result.header_image_thumbnail_url,
       headerImage: result.header_image_url,
-      releaseDate: result.release_date_for_display,
+      releaseDate: result.release_date_components.year,
       artistImageHeader: result.primary_artist.header_image_url,
     };
     console.log(result);
@@ -148,36 +149,50 @@ const loadLyrics = async function () {
     // console.log(result);
 
     // 2) Rendering Lyrics and Music info
-
     const markup = `
-        <section class="section-about">
-          <h1 class="u-center-text u-margin-bottom-medium heading-primary lyricsoligy-text-color">
-            welcome to Lyricsology<br />Where Lyrics Come to Life
-          </h1>
+        <figure class="artist">
+          <img
+            src="${result.artistImageHeader}"
+            alt="${track.artistName}"
+            class="artist__image"
+          />
+        </figure>
+        
+          
+          <div class="music__details u-margin-bottom-medium">
+            <img
+            src="${result.headerImage}"
+            alt="${track.title}"
+            class="music__image"
+            />
+            
+            <div class="music__info">
+              <p><span>${track.title}</span></p>
+              <p>
+                <span>${track.artistName}</span> &#9679 <span>${
+                  track.albumName
+                }</span> &#9679 <span>${
+                  result.releaseDate
+                }</span> &#9679 <span>${track.genre}</span>
+              </p>
+            </div>
+          </div>
 
-          <img src="${result.artistImageHeader}" alt="Artist image" />
-          <img src="${result.headerThumbnail}" alt="header image" />
-          <p class="paragraph">Date Release: ${result.releaseDate}</p>
-          <p class="paragraph">IdTrack: ${track.id}</p>
-          <p class="paragraph">Artist: ${track.artistName}</p>
-          <p class="paragraph">Title: ${track.title}</p>
-          <p class="paragraph">Album: ${track.albumName}</p>
-          <p class="paragraph">Fav: ${track.favourite}</p>
-          <p class="paragraph">LastUpdated: ${track.updatedTime}</p>
-          <p class="paragraph">Genre: ${track.genre}</p>
-          ${
-            !track.hasLyrics
-              ? `<p class="paragraph">"There is no lyrics for this song or Maybe this song is a instrumental!"</p>`
-              : `
-              <p class="paragraph">Lyrics: ${lyrics.body}</p>
-              <p class="paragraph">CopyRight: ${lyrics.copyright}</p>
-              <img class="section-about__img" src="${lyrics.imagePixel}" alt="image pixel" />`
-          }
-          
-          
-        </section>
+        <div class="music__lyrics">
+
+        ${
+          !track.hasLyrics
+            ? `<p class="paragraph">"There is no lyrics for this song or Maybe It's is a instrumental :)"</p>`
+            : `
+                    <p class="music__lyrics--body paragraph">${lyrics.body}</p>
+               
+                    <img class="music__image-pixel" src="${lyrics.imagePixel}" alt="image pixel" />
+                    <div class="music__copyright"><span style="line-height:54px;vertical-align:top;">Lyrics licensed by </span><img src="src/img/mxm.png" width="184" height="54" alt="MusixMatch"></div>
+                    
+                    `
+        }
+        </div>
     `;
-
     trackContainer.innerHTML = "";
     trackContainer.insertAdjacentHTML("afterbegin", markup);
   } catch (err) {
@@ -202,7 +217,9 @@ const loadSearchResults = async function () {
         query
       )}&page_size=7&page=1&apikey=${apiKey}&s_track_rating=DESC
       `);
+
     if (!data) return renderError(searchResultView);
+
     // Refactoring search result and pushing in state
     state.search.results = data.message.body.track_list.map(({ track }) => {
       return {

@@ -40,11 +40,10 @@
     }
   }
 
-  &__icon {
-    // margin-right: 1rem;
+  svg {
     width: 2.4rem;
     height: 2.4rem;
-    fill: currentColor;
+    stroke-width: 2.8;
   }
 
   &__btn {
@@ -75,7 +74,7 @@
     height: 100%;
     justify-items: center;
     font-family: inherit;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: $color-grey-dark-2;
     font-weight: 700;
     padding: 0 1.5rem;
@@ -88,9 +87,9 @@
     display: flex;
     align-items: center;
     svg {
-      width: 2.4rem;
-      height: 2.4rem;
-      fill: $color-grad-2;
+      width: 3rem;
+      height: 3rem;
+      color: $color-grad-2;
       margin-right: 0.5rem;
     }
 

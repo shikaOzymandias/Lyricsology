@@ -39,6 +39,11 @@ body {
       margin: 0;
       border-radius: 0; } }
 
+.svg-icon {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6; }
+
 .btn, .search__btn {
   background-image: linear-gradient(to bottom right, #ffd700, #008080);
   border-radius: 10rem;
@@ -51,7 +56,7 @@ body {
   transition: all 0.3s; }
   .btn:hover, .search__btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 2rem 6rem 0.5rem rgba(61, 61, 61, 0.2); }
+    box-shadow: 0 0rem 10rem rgba(61, 61, 61, 0.164); }
   .btn:focus, .search__btn:focus {
     outline: none;
     transform: scale(1.05); }
@@ -73,9 +78,9 @@ body {
   display: flex; }
   .message svg,
   .error svg {
-    width: 3rem;
-    height: 3rem;
-    fill: #007c7c;
+    width: 4.7rem;
+    height: 4.7rem;
+    color: #007c7c;
     transform: translateY(-0.3rem); }
   .message p,
   .error p {
@@ -148,10 +153,10 @@ body {
       outline: none; }
     .search__field::placeholder {
       color: #d3c7c3; }
-  .search__icon {
+  .search svg {
     width: 2.4rem;
     height: 2.4rem;
-    fill: currentColor; }
+    stroke-width: 2.8; }
   .search__btn {
     padding: 1rem 2rem;
     font-weight: 400;
@@ -170,7 +175,7 @@ body {
     height: 100%;
     justify-items: center;
     font-family: inherit;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: #918581;
     font-weight: 700;
     padding: 0 1.5rem;
@@ -182,9 +187,9 @@ body {
     display: flex;
     align-items: center; }
     .nav__btn svg {
-      width: 2.4rem;
-      height: 2.4rem;
-      fill: #008080;
+      width: 3rem;
+      height: 3rem;
+      color: #008080;
       margin-right: 0.5rem; }
     .nav__btn:hover {
       background-color: #f9f5f3;
@@ -401,7 +406,7 @@ body {
     text-transform: capitalize;
     letter-spacing: 1px; }
     .music__info > :first-child {
-      font-size: 6.2rem;
+      font-size: 5.2rem;
       font-weight: 700;
       letter-spacing: -3px; }
   .music__lyrics {
@@ -411,19 +416,22 @@ body {
     margin: 0 17rem;
     margin-bottom: 13rem;
     text-align: center;
-    line-height: 5rem;
+    line-height: 4rem;
     letter-spacing: 1px;
     text-transform: capitalize; }
+    .music__lyrics--body {
+      white-space: pre-line; }
   .music__copyright {
-    display: inline;
-    background-color: #007c7c;
-    color: #f2efee; }
+    display: inline-block;
+    font-size: 1.3rem;
+    font-weight: 700; }
+  .music__image-pixel {
+    display: none;
+    width: 3rem;
+    height: 3rem; }
 
 .section-about {
   padding: 3rem 5rem; }
-  .section-about__img {
-    width: 3rem;
-    height: 3rem; }
 
 .lyricsoligy-text-color {
   background-image: linear-gradient(to right, #ffd700, #008080);
