@@ -134,12 +134,15 @@ const loadLyrics = async function () {
 
     const resGen = await fetch(searchUrl);
     const dataGen = await resGen.json();
+    console.log(dataGen.response.hits[0]);
     let { result } = dataGen.response.hits[0];
     console.log(result);
     result = {
       headerThumbnail: result.header_image_thumbnail_url,
       headerImage: result.header_image_url,
-      releaseDate: result.release_date_components.year,
+      ...(result.release_date_components && {
+        releaseDate: result.release_date_components.year,
+      }),
       artistImageHeader: result.primary_artist.header_image_url,
     };
     console.log(result);
@@ -172,8 +175,8 @@ const loadLyrics = async function () {
                 <span>${track.artistName}</span> &#9679 <span>${
                   track.albumName
                 }</span> &#9679 <span>${
-                  result.releaseDate
-                }</span> &#9679 <span>${track.genre}</span>
+                  result.releaseDate === null ? "null" : ""
+                }</span> <span>${track.genre}</span>
               </p>
             </div>
           </div>
