@@ -4,7 +4,20 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .preview {
+  animation: fadeIn 0.5s ease-in;
+  -webkit-animation: fadeIn 0.5s ease-in;
   &__link {
     &:link,
     &:visited {
@@ -13,49 +26,53 @@
       text-decoration: none;
       border-right: 1px solid #fff;
       align-items: center;
-      transition: all 0.7s;
+      transition: all 0.3s;
       position: relative;
+
+      &:hover {
+        background-color: $color-grey-light-2;
+        transform: translateY(-2px);
+      }
     }
 
-    &::before {
-      background: $color-grey-light-1;
-      content: "";
-      inset: 0;
-      position: absolute;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.8s ease-in-out;
-      z-index: -1;
-    }
+    // &::before {
+    //   background: $color-grey-light-1;
+    //   content: "";
+    //   inset: 0;
+    //   position: absolute;
+    //   transform: scaleX(0);
+    //   transform-origin: right;
+    //   transition: transform 0.8s ease-in-out;
+    //   z-index: -1;
+    // }
 
-    &:hover::before {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
+    // &:hover::before {
+    //   transform: scaleX(1);
+    //   transform-origin: left;
+    // }
 
-    &--active {
-      background-color: $color-grey-light-1;
-    }
+    // &--active {
+    //   background-color: $color-grey-light-2;
+    // }
   }
 
-  &__img {
-    flex: 0 0 7rem;
-    border-radius: 10%;
-    height: 7rem;
-    overflow: hidden;
-    margin-right: 2rem;
+  // &__img {
+  //   flex: 0 0 7rem;
+  //   border-radius: 10%;
+  //   height: 7rem;
+  //   overflow: hidden;
+  //   margin-right: 2rem;
 
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
+  //   img {
+  //     display: block;
+  //     width: 100%;
+  //     height: 100%;
+  //     object-fit: cover;
+  //   }
+  // }
 
   &__data {
     display: grid;
-    width: 100%;
     align-items: center;
     grid-template-columns: 1fr 2rem;
     row-gap: 1rem;
@@ -63,27 +80,30 @@
 
   &__title {
     grid-column: 1/-1;
-    font-size: 1.5rem;
-    color: $color-primary;
-    text-transform: uppercase;
-    font-weight: 500;
+    font-size: 2rem;
+    color: $color-grad-2;
+    text-transform: capitalize;
+    font-weight: 700;
     transition: all 0.8s ease-in-out;
     //for text overflow
     @include textOverflow;
   }
 
-  &__artist {
-    color: $color-grey-dark-1;
-    font-size: 1.2rem;
-    text-transform: uppercase;
+  &__artist-album {
+    color: $color-grey-dark-2;
+    font-size: 1.5rem;
+    text-transform: capitalize;
     font-weight: 500;
     transition: all 0.8s ease-in-out;
     @include textOverflow;
+    span {
+      color: $color-grad-2;
+    }
   }
 
-  &:hover .preview__title {
-    color: $color-grad-1;
-  }
+  // &:hover .preview__title {
+  //   color: $color-grad-1;
+  // }
   // &:hover .preview__artist {
   //   color: $color-grad-1;
   // }

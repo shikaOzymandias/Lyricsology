@@ -8,8 +8,12 @@ const searchInputText = document.querySelector(".search__field");
 const searchResultView = document.querySelector(".results");
 const trackContainer = document.querySelector(".music");
 const headEl = document.getElementsByTagName("head")[0];
+// modal selectors
+const modal = document.querySelector(".modal");
+const showAboutUs = document.querySelector(".nav__btn--about-us");
+const closeBtn = document.querySelector(".close");
 
-const state = {
+let state = {
   music: {},
   search: {
     query: "",
@@ -66,6 +70,7 @@ const renderError = function (parentElement, message = errorMessage) {
 
 const loadLyrics = async function () {
   try {
+    let markup;
     // Taking id track and putting in id
 
     const id = window.location.hash.slice(1);
@@ -86,6 +91,9 @@ const loadLyrics = async function () {
     const data = await getJSON(
       `${API_URL}track.get?commontrack_id=${id}&apikey=${apiKey}`
     );
+    console.log(state.search.results);
+    const dataRes = state.search.results;
+    console.log(dataRes);
     console.log(data);
     console.log(lyricsData);
 
@@ -105,10 +113,9 @@ const loadLyrics = async function () {
     const lyricsScript = `<script type="text/javascript" src="${lyrics.script}">`;
     headEl.insertAdjacentHTML("beforeend", lyricsScript);
 
-    console.log(lyrics);
-
     // Reformating track data
     let { track } = data.message.body;
+    console.log(track);
     track = {
       id: track.track_id,
       title: track.track_name,
@@ -121,8 +128,12 @@ const loadLyrics = async function () {
       artistId: track.artist_id,
       artistName: track.artist_name,
       updatedTime: track.updated_time,
-      genre:
-        track.primary_genres.music_genre_list[0].music_genre.music_genre_name,
+      ...(track.primary_genres.music_genre_list.length !== 0 && {
+        genre:
+          track.primary_genres.music_genre_list[0].music_genre.music_genre_name,
+      }),
+      // genre:
+      //   track.primary_genres.music_genre_list[0].music_genre.music_genre_name,
       genres: track.primary_genres.music_genre_list,
     };
 
@@ -135,48 +146,75 @@ const loadLyrics = async function () {
     const resGen = await fetch(searchUrl);
     const dataGen = await resGen.json();
     console.log(dataGen.response.hits[0]);
-    let { result } = dataGen.response.hits[0];
-    console.log(result);
-    result = {
-      headerThumbnail: result.header_image_thumbnail_url,
-      headerImage: result.header_image_url,
-      ...(result.release_date_components && {
-        releaseDate: result.release_date_components.year,
-      }),
-      artistImageHeader: result.primary_artist.header_image_url,
-    };
-    console.log(result);
+
+    let result = {};
+
+    if (dataGen.response.hits.length !== 0) {
+      result = dataGen.response.hits[0].result;
+
+      console.log(result);
+
+      result = {
+        headerThumbnail: result.header_image_thumbnail_url,
+        headerImage: result.song_art_image_url,
+        ...(result.release_date_components && {
+          releaseDate: result.release_date_components.year,
+        }),
+        artistImageHeader: result.primary_artist.header_image_url,
+      };
+
+      console.log(result);
+    }
 
     // does not work like this i guess beacasue of getJSON
     // const result = await getJSON(searchUrl);
     // console.log(result);
 
+    // ${
+    //   result.artistImageHeader
+    //     ? `<img
+    //   src="${result.artistImageHeader}"
+    //   alt="${track.artistName}"
+    //   class="artist__image"
+    //   />`
+    //     : ""
+    // }
+
     // 2) Rendering Lyrics and Music info
-    const markup = `
+    markup = `
+    
         <figure class="artist">
-          <img
-            src="${result.artistImageHeader}"
-            alt="${track.artistName}"
-            class="artist__image"
+            <img
+              src="${
+                result.artistImageHeader
+                  ? result.artistImageHeader
+                  : "src/img/404.png"
+              }"
+              alt="${track.artistName ? result.artistName : "not found"}"
+              class="artist__image"
           />
         </figure>
         
           
           <div class="music__details u-margin-bottom-medium">
-            <img
-            src="${result.headerImage}"
-            alt="${track.title}"
-            class="music__image"
-            />
-            
+          <img
+              src="${
+                result.headerImage ? result.headerImage : "src/img/404.png"
+              }"
+              alt="${track.title ? result.title : "not found"}"
+              class="music__image"
+          />
             <div class="music__info">
               <p><span>${track.title}</span></p>
               <p>
                 <span>${track.artistName}</span> &#9679 <span>${
                   track.albumName
-                }</span> &#9679 <span>${
-                  result.releaseDate === null ? "null" : ""
-                }</span> <span>${track.genre}</span>
+                }</span>${
+                  result.releaseDate
+                    ? ` &#9679 <span>${result.releaseDate}</span>`
+                    : ""
+                }
+                ${track.genre ? ` &#9679 <span>${track.genre}</span>` : ""}
               </p>
             </div>
           </div>
@@ -223,19 +261,18 @@ const loadSearchResults = async function () {
 
     if (!data) return renderError(searchResultView);
 
+    console.log(data.message.body.track_list);
     // Refactoring search result and pushing in state
     state.search.results = data.message.body.track_list.map(({ track }) => {
       return {
-        trackId: track.track_id,
-        trackName: track.track_name,
+        title: track.track_name,
         commontrackId: track.commontrack_id,
-        hasLyrics: track.has_lyrics,
-        numFavourite: track.num_favourite,
         albumName: track.album_name,
         artistName: track.artist_name,
       };
     });
 
+    console.log(state.search.results);
     // 3. Render Search Results
 
     const resultMarkup = state.search.results
@@ -243,12 +280,9 @@ const loadSearchResults = async function () {
         (track) => `
       <li class="preview">
         <a href="#${track.commontrackId}" class="preview__link">
-          <figure class="preview__img">
-            <img src="src/img/test-1.jpg" alt="Test" />
-          </figure>
           <div class="preview__data">
-          <h3 class="preview__title">${track.trackName}</h3>
-          <p class="preview__artist">${track.artistName}</p>
+          <h3 class="preview__title">${track.title}</h3>
+          <p class="preview__artist-album">${track.artistName}<span> &#9679 </span>${track.albumName}</p>
           </div>
           </a>
           </li>
@@ -277,3 +311,11 @@ searchForm.addEventListener("submit", function (e) {
 
 window.addEventListener("hashchange", loadLyrics);
 window.addEventListener("load", loadLyrics);
+
+showAboutUs.addEventListener("click", () => {
+  modal.showModal();
+});
+
+closeBtn.addEventListener("click", () => {
+  modal.close();
+});
