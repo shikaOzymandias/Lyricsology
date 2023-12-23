@@ -1,0 +1,106 @@
+.modal {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100rem;
+  border: none;
+
+  animation: fade-out 0.5s;
+  box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.25);
+  border-radius: 9px;
+  padding: 3rem 6rem;
+  &[open] {
+    animation: fade-in 0.9s ease-out;
+  }
+
+  &[open]::backdrop {
+    animation: backdrop-fade-in 0.7s ease-out forwards;
+  }
+
+  &__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 3rem;
+  }
+  &__column {
+    display: grid;
+    gap: 0.5rem;
+
+    & p {
+      color: $color-grey-dark-1;
+      font-weight: 400;
+    }
+
+    & li {
+      margin: 0.7rem 3.5rem;
+      list-style: outside;
+    }
+  }
+
+  &__heading {
+    font-size: 2.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    grid-row: 1/-1;
+  }
+
+  &__heading-secondary {
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  &__btn-close {
+    font-family: inherit;
+    color: $color-primary;
+    position: absolute;
+    top: 0.5rem;
+    right: 1.6rem;
+    font-size: 4rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+}
+
+/* Animation keyframes */
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    // transform: scaleY(0);
+    display: none;
+  }
+
+  100% {
+    opacity: 1;
+    // transform: scaleY(1);
+    display: block;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    // transform: scaleY(1);
+    display: block;
+  }
+
+  100% {
+    opacity: 0;
+    // transform: scaleY(0);
+    display: none;
+  }
+}
+
+@keyframes backdrop-fade-in {
+  0% {
+    // background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
+
+  100% {
+    backdrop-filter: blur(4px);
+    // background-color: rgba(0, 0, 0, 0.336);
+  }
+}

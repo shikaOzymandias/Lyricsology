@@ -11,7 +11,7 @@ const headEl = document.getElementsByTagName("head")[0];
 // modal selectors
 const modal = document.querySelector(".modal");
 const showAboutUs = document.querySelector(".nav__btn--about-us");
-const closeBtn = document.querySelector(".close");
+const closeBtn = document.querySelector(".modal__btn-close");
 
 let state = {
   music: {},
