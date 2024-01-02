@@ -1,7 +1,6 @@
 const API_URL = "https://api.musixmatch.com/ws/1.1/";
-const apiKey = "8a497867c325bbcf4b4c9d286f8450bb";
-const apiKeyGen =
-  "b-KgY7LZtvivwRqE1ztvRAKgmx_wq16cZzpuMvx5LPnwTgd3Pur-v9y_MMxKuvqJ";
+const apiKey = `${process.env.MUSIX_API_KEY}`;
+const apiKeyGen = `${process.env.GENIUS_API_KEY}`;
 const errorMessage = "We couldn't find lyrics. try something else ...";
 const searchForm = document.querySelector(".search");
 const searchInputText = document.querySelector(".search__field");
@@ -12,6 +11,9 @@ const headEl = document.getElementsByTagName("head")[0];
 const modal = document.querySelector(".modal");
 const showAboutUs = document.querySelector(".nav__btn--about-us");
 const closeBtn = document.querySelector(".modal__btn-close");
+
+console.log(process.env.GENIUS_API_KEY);
+console.log(`${process.env.MUSIX_API_KEY}`);
 
 let state = {
   music: {},
