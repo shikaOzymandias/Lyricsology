@@ -10,6 +10,9 @@
 html {
   box-sizing: border-box;
   font-size: 62.5%; }
+  @media only screen and (max-width: 61.25em) {
+    html {
+      font-size: 50%; } }
 
 body {
   font-family: "Roboto", sans-serif;
@@ -128,9 +131,9 @@ body {
   align-items: center;
   justify-content: space-between; }
   .header__logo {
-    display: block;
-    height: 3.5rem;
-    margin-left: 3rem; }
+    height: 4.5rem;
+    margin-left: 3rem;
+    display: block; }
 
 .search {
   background-color: #fff;
@@ -153,6 +156,11 @@ body {
       outline: none; }
     .search__field::placeholder {
       color: #d3c7c3; }
+    @media only screen and (max-width: 61.25em) {
+      .search__field {
+        width: auto; }
+        .search__field::placeholder {
+          color: white; } }
   .search svg {
     width: 2.4rem;
     height: 2.4rem;

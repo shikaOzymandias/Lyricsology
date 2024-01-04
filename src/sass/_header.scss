@@ -6,9 +6,9 @@
   justify-content: space-between;
 
   &__logo {
-    display: block;
-    height: 3.5rem;
+    height: 4.5rem;
     margin-left: 3rem;
+    display: block;
   }
 }
 
@@ -37,6 +37,14 @@
 
     &::placeholder {
       color: $color-grey-light-3;
+    }
+
+    @media only screen and (max-width: $bp-medium) {
+      width: auto;
+
+      &::placeholder {
+        color: white;
+      }
     }
   }
 
