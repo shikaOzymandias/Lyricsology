@@ -2,17 +2,21 @@
   "name": "lyrcosolgy",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "default": "index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "targets": {
+    "main": false
+  },
   "scripts": {
-    "compile:sass": "node-sass src/sass/main.scss src/css/style.css -w",
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "author": "Masoud Rz",
   "license": "ISC",
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.9.3",
     "node-sass": "^9.0.0",
-    "parcel-bundler": "^1.12.5",
+    "parcel": "^2.11.0",
     "prettier": "^3.1.0"
   }
 }
