@@ -22,13 +22,6 @@ Lyricsology is a web application that allows users to search for song lyrics. It
 - Musixmatch API
 - Genius API
 
-## Getting Started
-
-To run the project locally, follow these steps:
-
-1. Clone the repository.
-2. Open `index.html` in your web browser.
-
 ## Contributions
 
 Contributions are welcome!
