@@ -17,6 +17,7 @@ let state = {
   search: {
     query: "",
     results: [],
+    perPage: 10,
   },
 };
 
@@ -238,6 +239,13 @@ const loadLyrics = async function () {
   }
 };
 
+const getSearchResultsPage = function (page) {
+  const start = (page - 1) * state.search.perPage; // if page is 1 it will be 0
+  const end = page * state.search.perPage; // // if page is 1 it will be 9
+
+  return state.search.results.slice(start, end);
+};
+
 const loadSearchResults = async function () {
   try {
     renderSpinner(searchResultView);
@@ -252,7 +260,7 @@ const loadSearchResults = async function () {
     const data =
       await getJSON(`${API_URL}track.search?q_track_artist=${encodeURIComponent(
         query
-      )}&page_size=7&page=1&apikey=${apiKey}&s_track_rating=DESC
+      )}&page_size=50&apikey=${apiKey}&s_track_rating=DESC
       `);
 
     if (!data) return renderError(searchResultView);
@@ -269,7 +277,7 @@ const loadSearchResults = async function () {
 
     // 3. Render Search Results
 
-    const resultMarkup = state.search.results
+    const resultMarkup = getSearchResultsPage(1)
       .map(
         (track) => `
       <li class="preview">
@@ -283,7 +291,6 @@ const loadSearchResults = async function () {
           `
       )
       .join("");
-
     // Emptying result history
     searchResultView.innerHTML = "";
     // Render results
