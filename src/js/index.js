@@ -210,8 +210,9 @@ const loadLyrics = async function () {
                     <p class="music__lyrics--body paragraph">${lyrics.body}</p>
                
                     <img class="music__image-pixel" src="${lyrics.imagePixel}" alt="image pixel" />
-                    <div class="music__copyright"><span style="line-height:54px;vertical-align:top;">Lyrics licensed by </span><img src="src/img/mxm.png" width="184" height="54" alt="MusixMatch"></div>
-                    
+                    <div class="music__copyright">
+                    <span style="line-height:54px;vertical-align:top;">Lyrics licensed by </span><img src="https://www.azlyrics.com/images/mxm.png" width="184" height="54" alt="MusixMatch">
+                    </div>
                     `
         }
         </div>
