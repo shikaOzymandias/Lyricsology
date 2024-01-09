@@ -18,6 +18,7 @@ let state = {
     query: "",
     results: [],
     perPage: 10,
+    page: 1,
   },
 };
 
@@ -159,23 +160,7 @@ const loadLyrics = async function () {
         }),
         artistImageHeader: result.primary_artist.header_image_url,
       };
-
-      console.log(result);
     }
-
-    // does not work like this i guess beacasue of getJSON
-    // const result = await getJSON(searchUrl);
-    // console.log(result);
-
-    // ${
-    //   result.artistImageHeader
-    //     ? `<img
-    //   src="${result.artistImageHeader}"
-    //   alt="${track.artistName}"
-    //   class="artist__image"
-    //   />`
-    //     : ""
-    // }
 
     // 2) Rendering Lyrics and Music info
     markup = `
@@ -239,7 +224,9 @@ const loadLyrics = async function () {
   }
 };
 
-const getSearchResultsPage = function (page) {
+const getSearchResultsPage = function (page = state.search.page) {
+  state.search.page = page;
+
   const start = (page - 1) * state.search.perPage; // if page is 1 it will be 0
   const end = page * state.search.perPage; // // if page is 1 it will be 9
 
@@ -277,7 +264,7 @@ const loadSearchResults = async function () {
 
     // 3. Render Search Results
 
-    const resultMarkup = getSearchResultsPage(1)
+    const resultMarkup = getSearchResultsPage()
       .map(
         (track) => `
       <li class="preview">
