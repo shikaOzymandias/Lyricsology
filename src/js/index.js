@@ -12,9 +12,6 @@ const modal = document.querySelector(".modal");
 const showAboutUs = document.querySelector(".nav__btn--about-us");
 const closeBtn = document.querySelector(".modal__btn-close");
 
-console.log(process.env.GENIUS_API_KEY);
-console.log(`${process.env.MUSIX_API_KEY}`);
-
 let state = {
   music: {},
   search: {
@@ -93,11 +90,8 @@ const loadLyrics = async function () {
     const data = await getJSON(
       `${API_URL}track.get?commontrack_id=${id}&apikey=${apiKey}`
     );
-    console.log(state.search.results);
+
     const dataRes = state.search.results;
-    console.log(dataRes);
-    console.log(data);
-    console.log(lyricsData);
 
     // Reformating lyricsData
     let { lyrics } = lyricsData.message.body;
@@ -263,7 +257,6 @@ const loadSearchResults = async function () {
 
     if (!data) return renderError(searchResultView);
 
-    console.log(data.message.body.track_list);
     // Refactoring search result and pushing in state
     state.search.results = data.message.body.track_list.map(({ track }) => {
       return {
@@ -274,7 +267,6 @@ const loadSearchResults = async function () {
       };
     });
 
-    console.log(state.search.results);
     // 3. Render Search Results
 
     const resultMarkup = state.search.results
@@ -291,8 +283,6 @@ const loadSearchResults = async function () {
           `
       )
       .join("");
-
-    console.log(state.search.results);
 
     // Emptying result history
     searchResultView.innerHTML = "";
