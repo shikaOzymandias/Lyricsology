@@ -29,6 +29,9 @@
 .pages {
   list-style: none;
   display: flex;
+  align-items: center;
+  justify-content: space-around;
+
   &__numbers,
   &__btn,
   &__dots {

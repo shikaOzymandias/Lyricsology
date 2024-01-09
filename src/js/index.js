@@ -2,11 +2,14 @@ const API_URL = "https://api.musixmatch.com/ws/1.1/";
 const apiKey = `${process.env.MUSIX_API_KEY}`;
 const apiKeyGen = `${process.env.GENIUS_API_KEY}`;
 const errorMessage = "We couldn't find lyrics. try something else ...";
+// Search Selector
 const searchForm = document.querySelector(".search");
 const searchInputText = document.querySelector(".search__field");
 const searchResultView = document.querySelector(".results");
+let lengthResults = 50; // numbers of results - range is 0 - 100
 const trackContainer = document.querySelector(".music");
 const headEl = document.getElementsByTagName("head")[0];
+const paginationContainer = document.querySelector(".pages");
 // modal selectors
 const modal = document.querySelector(".modal");
 const showAboutUs = document.querySelector(".nav__btn--about-us");
@@ -225,6 +228,26 @@ const loadLyrics = async function () {
   }
 };
 
+const loadPagination = function () {
+  const numPages = lengthResults / state.search.perPage;
+  const curPage = state.search.page;
+
+  // Page 1 , there are other Pages
+  if (curPage === 1 && numPages > 1) {
+    return "Page 1 and others";
+  }
+  // Last Page
+  if (curPage === numPages && numPages > 1) {
+    return "Last pages";
+  }
+  // Other Pages(no first , no last)
+  if (numPages > curPage) {
+    return "Other pages";
+  }
+  // Page 1 , there are no other Pages
+  return "Only one page";
+};
+
 const getSearchResultsPage = function (page = state.search.page) {
   state.search.page = page;
 
@@ -248,7 +271,7 @@ const loadSearchResults = async function () {
     const data =
       await getJSON(`${API_URL}track.search?q_track_artist=${encodeURIComponent(
         query
-      )}&page_size=50&apikey=${apiKey}&s_track_rating=DESC
+      )}&page_size=${lengthResults}&apikey=${apiKey}&s_track_rating=DESC
       `);
 
     if (!data) return renderError(searchResultView);
@@ -265,7 +288,7 @@ const loadSearchResults = async function () {
 
     // 3. Render Search Results
 
-    const resultMarkup = getSearchResultsPage()
+    const resultMarkup = getSearchResultsPage(4)
       .map(
         (track) => `
       <li class="preview">
@@ -283,6 +306,13 @@ const loadSearchResults = async function () {
     searchResultView.innerHTML = "";
     // Render results
     searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
+
+    // Render Pagination
+    const paginationMarkup = loadPagination();
+
+    paginationContainer.innerHTML = "";
+
+    paginationContainer.insertAdjacentHTML("afterbegin", paginationMarkup);
   } catch (err) {
     console.error(err);
     renderError(searchResultView, `${err}`);
