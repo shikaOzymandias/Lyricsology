@@ -9,6 +9,7 @@ const searchResultView = document.querySelector(".results");
 let lengthResults = 50; // numbers of results - range is 0 - 100
 const trackContainer = document.querySelector(".music");
 const headEl = document.getElementsByTagName("head")[0];
+// pagination selector
 const paginationContainer = document.querySelector(".pages");
 // modal selectors
 const modal = document.querySelector(".modal");
@@ -20,6 +21,7 @@ let state = {
   search: {
     query: "",
     results: [],
+    resultsView: [],
     perPage: 10,
     page: 1,
   },
@@ -233,11 +235,17 @@ const controlPagination = function () {
 
   // Created Button based on condition
   const createButton = (classModifier, pathData) => `
-    <button class="pages__btn pagination__btn--${classModifier}">
+
+    <button
+      data-goto="${classModifier === "prev" ? curPage - 1 : curPage + 1}"
+      class="pages__btn pagination__btn--${classModifier}">
+
       ${classModifier === "next" ? `<span>Page ${curPage + 1}</span>` : ""}
+      
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-icon">
         <path stroke-linecap="round" stroke-linejoin="round" d="${pathData}" />
       </svg>
+
       ${classModifier === "prev" ? `<span>Page ${curPage - 1}</span>` : ""}
     </button>
   `;
@@ -264,6 +272,46 @@ const controlPagination = function () {
 };
 
 const loadPagination = function () {
+  paginationContainer.addEventListener("click", function (e) {
+    const btn = e.target.closest(".pages__btn");
+    if (!btn) return;
+
+    const goToPage = +btn.dataset.goto;
+
+    console.log(goToPage);
+
+    resultMarkup = "";
+    resultMarkup = getSearchResultsPage(goToPage)
+      .map(
+        (track) => `
+      <li class="preview">
+        <a href="#${track.commontrackId}" class="preview__link">
+          <div class="preview__data">
+          <h3 class="preview__title">${track.title}</h3>
+          <p class="preview__artist-album">${track.artistName}<span> &#9679 </span>${track.albumName}</p>
+          </div>
+          </a>
+          </li>
+          `
+      )
+      .join("");
+
+    // Emptying result history
+    searchResultView.innerHTML = "";
+
+    // Render results
+    searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
+
+    //
+    const paginationMarkup = controlPagination();
+
+    // Emptying pagination
+    paginationContainer.innerHTML = "";
+
+    // Render pagination
+    paginationContainer.insertAdjacentHTML("afterbegin", paginationMarkup);
+  });
+
   // Render Pagination
   const paginationMarkup = controlPagination();
 
@@ -280,6 +328,8 @@ const getSearchResultsPage = function (page = state.search.page) {
   const start = (page - 1) * state.search.perPage; // if page is 1 it will be 0
   const end = page * state.search.perPage; // // if page is 1 it will be 9
 
+  state.search.resultsView = state.search.results.slice(start, end);
+  console.log(state.search.resultsView);
   return state.search.results.slice(start, end);
 };
 
@@ -313,8 +363,8 @@ const loadSearchResults = async function () {
     });
 
     // 3. Render Search Results
-
-    const resultMarkup = getSearchResultsPage(3)
+    let resultMarkup = "";
+    resultMarkup = getSearchResultsPage()
       .map(
         (track) => `
       <li class="preview">
