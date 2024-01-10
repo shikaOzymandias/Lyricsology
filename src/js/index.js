@@ -167,7 +167,6 @@ const loadLyrics = async function () {
 
     // 2) Rendering Lyrics and Music info
     markup = `
-    
         <figure class="artist">
             <img
               src="${
@@ -228,79 +227,51 @@ const loadLyrics = async function () {
   }
 };
 
-const loadPagination = function () {
+const controlPagination = function () {
   const numPages = lengthResults / state.search.perPage;
   const curPage = state.search.page;
 
-  // Page 1 , there are other Pages
+  // Created Button based on condition
+  const createButton = (classModifier, pathData) => `
+    <button class="pages__btn pagination__btn--${classModifier}">
+      ${classModifier === "next" ? `<span>Page ${curPage + 1}</span>` : ""}
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-icon">
+        <path stroke-linecap="round" stroke-linejoin="round" d="${pathData}" />
+      </svg>
+      ${classModifier === "prev" ? `<span>Page ${curPage - 1}</span>` : ""}
+    </button>
+  `;
+
+  // Page 1, there are other Pages
   if (curPage === 1 && numPages > 1) {
-    return `
-          <button class="pages__btn pagination__btn--next">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                class="svg-icon"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-          </button>
-    `;
+    return createButton("next", "M8.25 4.5l7.5 7.5-7.5 7.5");
   }
+
   // Last Page
   if (curPage === numPages && numPages > 1) {
-    return `
-          <button class="pages__btn pagination__btn--prev">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                class="svg-icon"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-          </button>
-    `;
+    return createButton("prev", "M15.75 19.5L8.25 12l7.5-7.5");
   }
-  // Other Pages(no first , no last)
+
+  // Other Pages (no first, no last)
   if (numPages > curPage) {
-    return `
-          <button class="pages__btn pagination__btn--prev">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                class="svg-icon"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 19.5L8.25 12l7.5-7.5"
-                />
-              </svg>
-          </button>
-          <button class="pages__btn pagination__btn--next">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                class="svg-icon"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-          </button>
-    `;
+    const prevButton = createButton("prev", "M15.75 19.5L8.25 12l7.5-7.5");
+    const nextButton = createButton("next", "M8.25 4.5l7.5 7.5-7.5 7.5");
+    return prevButton + nextButton;
   }
-  // Page 1 , there are no other Pages
+
+  // Page 1, there are no other Pages
   return "";
+};
+
+const loadPagination = function () {
+  // Render Pagination
+  const paginationMarkup = controlPagination();
+
+  // Emptying pagination
+  paginationContainer.innerHTML = "";
+
+  // Render pagination
+  paginationContainer.insertAdjacentHTML("afterbegin", paginationMarkup);
 };
 
 const getSearchResultsPage = function (page = state.search.page) {
@@ -343,7 +314,7 @@ const loadSearchResults = async function () {
 
     // 3. Render Search Results
 
-    const resultMarkup = getSearchResultsPage(2)
+    const resultMarkup = getSearchResultsPage(3)
       .map(
         (track) => `
       <li class="preview">
@@ -357,17 +328,15 @@ const loadSearchResults = async function () {
           `
       )
       .join("");
+
     // Emptying result history
     searchResultView.innerHTML = "";
+
     // Render results
     searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
 
-    // Render Pagination
-    const paginationMarkup = loadPagination();
-
-    paginationContainer.innerHTML = "";
-
-    paginationContainer.insertAdjacentHTML("afterbegin", paginationMarkup);
+    // Loading Pagination
+    loadPagination();
   } catch (err) {
     console.error(err);
     renderError(searchResultView, `${err}`);
@@ -382,6 +351,7 @@ searchForm.addEventListener("submit", function (e) {
 });
 
 window.addEventListener("hashchange", loadLyrics);
+
 window.addEventListener("load", loadLyrics);
 
 showAboutUs.addEventListener("click", () => {
