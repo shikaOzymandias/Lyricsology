@@ -234,18 +234,73 @@ const loadPagination = function () {
 
   // Page 1 , there are other Pages
   if (curPage === 1 && numPages > 1) {
-    return "Page 1 and others";
+    return `
+          <button class="pages__btn pagination__btn--next">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="svg-icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+          </button>
+    `;
   }
   // Last Page
   if (curPage === numPages && numPages > 1) {
-    return "Last pages";
+    return `
+          <button class="pages__btn pagination__btn--prev">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="svg-icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+          </button>
+    `;
   }
   // Other Pages(no first , no last)
   if (numPages > curPage) {
-    return "Other pages";
+    return `
+          <button class="pages__btn pagination__btn--prev">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="svg-icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+          </button>
+          <button class="pages__btn pagination__btn--next">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="svg-icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+          </button>
+    `;
   }
   // Page 1 , there are no other Pages
-  return "Only one page";
+  return "";
 };
 
 const getSearchResultsPage = function (page = state.search.page) {
@@ -288,7 +343,7 @@ const loadSearchResults = async function () {
 
     // 3. Render Search Results
 
-    const resultMarkup = getSearchResultsPage(4)
+    const resultMarkup = getSearchResultsPage(2)
       .map(
         (track) => `
       <li class="preview">
