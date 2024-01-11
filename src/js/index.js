@@ -281,6 +281,38 @@ const renderPagination = function () {
   paginationContainer.insertAdjacentHTML("afterbegin", paginationMarkup);
 };
 
+const renderSearchResult = function (page = state.search.page) {
+  state.search.page = page;
+
+  const start = (page - 1) * state.search.perPage; // if page is 1 it will be 0
+  const end = page * state.search.perPage; // // if page is 1 it will be 9
+
+  state.search.resultsView = state.search.results.slice(start, end);
+
+  // console.log(state.search.resultsView);
+  // return state.search.results.slice(start, end);
+  const resultMarkup = state.search.resultsView
+    .map(
+      (track) => `
+      <li class="preview">
+        <a href="#${track.commontrackId}" class="preview__link">
+          <div class="preview__data">
+          <h3 class="preview__title">${track.title}</h3>
+          <p class="preview__artist-album">${track.artistName}<span> &#9679 </span>${track.albumName}</p>
+          </div>
+          </a>
+          </li>
+          `
+    )
+    .join("");
+
+  // Emptying result history
+  searchResultView.innerHTML = "";
+
+  // Render results
+  searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
+};
+
 const loadPagination = function () {
   paginationContainer.addEventListener("click", function (e) {
     const btn = e.target.closest(".pages__btn");
