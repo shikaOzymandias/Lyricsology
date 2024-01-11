@@ -289,8 +289,6 @@ const renderSearchResult = function (page = state.search.page) {
 
   state.search.resultsView = state.search.results.slice(start, end);
 
-  // console.log(state.search.resultsView);
-  // return state.search.results.slice(start, end);
   const resultMarkup = state.search.resultsView
     .map(
       (track) => `
@@ -320,30 +318,8 @@ const loadPagination = function () {
 
     const goToPage = +btn.dataset.goto;
 
-    console.log(goToPage);
-
+    // render SearchResult
     renderSearchResult(goToPage);
-    // resultMarkup = "";
-    // resultMarkup = getSearchResultsPage(goToPage)
-    //   .map(
-    //     (track) => `
-    //   <li class="preview">
-    //     <a href="#${track.commontrackId}" class="preview__link">
-    //       <div class="preview__data">
-    //       <h3 class="preview__title">${track.title}</h3>
-    //       <p class="preview__artist-album">${track.artistName}<span> &#9679 </span>${track.albumName}</p>
-    //       </div>
-    //       </a>
-    //       </li>
-    //       `
-    //   )
-    //   .join("");
-
-    // // Emptying result history
-    // searchResultView.innerHTML = "";
-
-    // // Render results
-    // searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
 
     // render Pagination
     renderPagination();
@@ -357,8 +333,8 @@ const getSearchResultsPage = function (page = state.search.page) {
   const end = page * state.search.perPage; // // if page is 1 it will be 9
 
   state.search.resultsView = state.search.results.slice(start, end);
-  console.log(state.search.resultsView);
-  return state.search.results.slice(start, end);
+
+  return state.search.resultsView;
 };
 
 const loadSearchResults = async function () {
@@ -393,29 +369,6 @@ const loadSearchResults = async function () {
     // 3. Render Search Results
 
     renderSearchResult();
-    // let resultMarkup = "";
-    // resultMarkup = getSearchResultsPage()
-    //   .map(
-    //     (track) => `
-    //   <li class="preview">
-    //     <a href="#${track.commontrackId}" class="preview__link">
-    //       <div class="preview__data">
-    //       <h3 class="preview__title">${track.title}</h3>
-    //       <p class="preview__artist-album">${track.artistName}<span> &#9679 </span>${track.albumName}</p>
-    //       </div>
-    //       </a>
-    //       </li>
-    //       `
-    //   )
-    //   .join("");
-
-    // // Emptying result history
-    // searchResultView.innerHTML = "";
-
-    // // Render results
-    // searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
-
-    // render Pagination
   } catch (err) {
     console.error(err);
     renderError(searchResultView, `${err}`);
@@ -424,6 +377,8 @@ const loadSearchResults = async function () {
 
 searchForm.addEventListener("submit", function (e) {
   e.preventDefault();
+  // bringing value of page to 1
+  state.search.page = 1;
 
   // Loading saerch result
   loadSearchResults();
