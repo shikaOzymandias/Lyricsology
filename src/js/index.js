@@ -312,24 +312,9 @@ const loadPagination = function () {
     // Render results
     searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
 
-    //
-    const paginationMarkup = markupPagination();
-
-    // Emptying pagination
-    paginationContainer.innerHTML = "";
-
-    // Render pagination
-    paginationContainer.insertAdjacentHTML("afterbegin", paginationMarkup);
+    // render Pagination
+    renderPagination();
   });
-
-  // Render Pagination
-  const paginationMarkup = markupPagination();
-
-  // Emptying pagination
-  paginationContainer.innerHTML = "";
-
-  // Render pagination
-  paginationContainer.insertAdjacentHTML("afterbegin", paginationMarkup);
 };
 
 const getSearchResultsPage = function (page = state.search.page) {
@@ -395,6 +380,9 @@ const loadSearchResults = async function () {
 
     // Render results
     searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
+
+    // render Pagination
+    renderPagination();
 
     // Loading Pagination
     loadPagination();
