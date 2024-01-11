@@ -6,7 +6,7 @@ const errorMessage = "We couldn't find lyrics. try something else ...";
 const searchForm = document.querySelector(".search");
 const searchInputText = document.querySelector(".search__field");
 const searchResultView = document.querySelector(".results");
-let lengthResults = 50; // numbers of results - range is 0 - 100
+let numResults = 50; // numbers of results - range is 0 - 100
 const trackContainer = document.querySelector(".music");
 const headEl = document.getElementsByTagName("head")[0];
 // pagination selector
@@ -229,8 +229,8 @@ const loadLyrics = async function () {
   }
 };
 
-const controlPagination = function () {
-  const numPages = lengthResults / state.search.perPage;
+const markupPagination = function () {
+  const numPages = numResults / state.search.perPage;
   const curPage = state.search.page;
 
   // Created Button based on condition
@@ -271,6 +271,16 @@ const controlPagination = function () {
   return "";
 };
 
+const renderPagination = function () {
+  const paginationMarkup = markupPagination();
+
+  // Emptying pagination
+  paginationContainer.innerHTML = "";
+
+  // Render pagination
+  paginationContainer.insertAdjacentHTML("afterbegin", paginationMarkup);
+};
+
 const loadPagination = function () {
   paginationContainer.addEventListener("click", function (e) {
     const btn = e.target.closest(".pages__btn");
@@ -303,7 +313,7 @@ const loadPagination = function () {
     searchResultView.insertAdjacentHTML("afterbegin", resultMarkup);
 
     //
-    const paginationMarkup = controlPagination();
+    const paginationMarkup = markupPagination();
 
     // Emptying pagination
     paginationContainer.innerHTML = "";
@@ -313,7 +323,7 @@ const loadPagination = function () {
   });
 
   // Render Pagination
-  const paginationMarkup = controlPagination();
+  const paginationMarkup = markupPagination();
 
   // Emptying pagination
   paginationContainer.innerHTML = "";
@@ -347,7 +357,7 @@ const loadSearchResults = async function () {
     const data =
       await getJSON(`${API_URL}track.search?q_track_artist=${encodeURIComponent(
         query
-      )}&page_size=${lengthResults}&apikey=${apiKey}&s_track_rating=DESC
+      )}&page_size=${numResults}&apikey=${apiKey}&s_track_rating=DESC
       `);
 
     if (!data) return renderError(searchResultView);
@@ -363,6 +373,7 @@ const loadSearchResults = async function () {
     });
 
     // 3. Render Search Results
+
     let resultMarkup = "";
     resultMarkup = getSearchResultsPage()
       .map(
