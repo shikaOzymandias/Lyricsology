@@ -10,7 +10,7 @@ let numResults = 50; // numbers of results - range is 0 - 100
 const trackContainer = document.querySelector(".music");
 const headEl = document.getElementsByTagName("head")[0];
 // pagination selector
-const paginationContainer = document.querySelector(".pages");
+const paginationContainer = document.querySelector(".pagination");
 // modal selectors
 const modal = document.querySelector(".modal");
 const showAboutUs = document.querySelector(".nav__btn--about-us");
@@ -238,7 +238,7 @@ const markupPagination = function () {
 
     <button
       data-goto="${classModifier === "prev" ? curPage - 1 : curPage + 1}"
-      class="pages__btn pagination__btn--${classModifier}">
+      class="pagination__btn btn--inline pagination__btn--${classModifier}">
 
       ${classModifier === "next" ? `<span>Page ${curPage + 1}</span>` : ""}
       
@@ -313,7 +313,7 @@ const renderSearchResult = function (page = state.search.page) {
 
 const loadPagination = function () {
   paginationContainer.addEventListener("click", function (e) {
-    const btn = e.target.closest(".pages__btn");
+    const btn = e.target.closest(".pagination__btn");
     if (!btn) return;
 
     const goToPage = +btn.dataset.goto;
