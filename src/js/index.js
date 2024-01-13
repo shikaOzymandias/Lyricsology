@@ -16,6 +16,7 @@ const modal = document.querySelector(".modal");
 const showAboutUs = document.querySelector(".nav__btn--about-us");
 const closeBtn = document.querySelector(".modal__btn-close");
 
+console.log(apiKey);
 let state = {
   music: {},
   search: {
@@ -59,6 +60,10 @@ const renderSpinner = function (parentElement) {
 };
 
 const renderError = function (parentElement, message = errorMessage) {
+  if (message.includes("is not valid JSON")) {
+    message = "There is some problem with Genius Api. Try again later.";
+  }
+
   const markup = `
           <div class="error">
             <div>
@@ -148,8 +153,8 @@ const loadLyrics = async function () {
 
     const resGen = await fetch(searchUrl);
     const dataGen = await resGen.json();
-    console.log(dataGen.response.hits[0]);
-
+    console.log(resGen);
+    console.log(dataGen);
     let result = {};
 
     if (dataGen.response.hits.length !== 0) {
