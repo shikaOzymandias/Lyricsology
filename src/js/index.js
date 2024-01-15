@@ -16,7 +16,7 @@ const modal = document.querySelector(".modal");
 const showAboutUs = document.querySelector(".nav__btn--about-us");
 const closeBtn = document.querySelector(".modal__btn-close");
 
-console.log(apiKey);
+console.log(`${process.env.MUSIX_API_KEY}`);
 let state = {
   music: {},
   search: {
