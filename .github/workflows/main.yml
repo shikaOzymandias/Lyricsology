@@ -19,8 +19,8 @@ jobs:
       run: |
         npm install
       env:
-        REACT_APP_APIKey: ${{ secrets.GENIUS_API_KEY }}
-        REACT_APP_APISecret: ${{ secrets.MUSIX_API_KEY }}
+        GENIUS_API_KEY: ${{ secrets.GENIUS_API_KEY }}
+        MUSIX_API_KEY: ${{ secrets.MUSIX_API_KEY }}
 
     # - name: Deploy
     #   uses: JamesIves/github-pages-deploy-action@releases/v3
