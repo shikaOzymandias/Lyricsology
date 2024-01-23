@@ -579,22 +579,10 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"ebWYT":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = {
-    async fetch (request1, env1, ctx) {
-        return `API host: ${env1.GENIUS_API_KEY}`;
-    }
-};
-addEventListener("fetch", (event)=>{
-    event.respondWith(handleRequest(event.request));
-});
+// import { geniusApiKey, musixApiKey } from "../..";
 const API_URL = "https://api.musixmatch.com/ws/1.1/";
-const apiKey = secrets.MUSIX_API_KEY;
-const apiKeyGen = GENIUS_API_KEY;
-const apiKeyGen2 = request.GENIUS_API_KEY;
-const apiKeyGen3 = "b-KgY7LZtvivwRqE1ztvRAKgmx_wq16cZzpuMvx5LPnwTgd3Pur-v9y_MMxKuvqJ";
-const apiKeyGen4 = env.GENIUS_API_KEY;
+// const apiKey = process.env.;
+// const apiKeyGen = geniusApiKey;
 const errorMessage = "We couldn't find lyrics. try something else ...";
 // Search Selector
 const searchForm = document.querySelector(".search");
@@ -609,11 +597,7 @@ const paginationContainer = document.querySelector(".pagination");
 const modal = document.querySelector(".modal");
 const showAboutUs = document.querySelector(".nav__btn--about-us");
 const closeBtn = document.querySelector(".modal__btn-close");
-console.log(apiKey);
-console.log(apiKeyGen);
-console.log(apiKeyGen2);
-console.log(apiKeyGen3);
-console.log(apiKeyGen4);
+console.log(`${"8a497867c325bbcf4b4c9d286f8450bb"}`);
 let state = {
     music: {},
     search: {
@@ -767,7 +751,7 @@ const loadLyrics = async function() {
                
                     <img class="music__image-pixel" src="${lyrics.imagePixel}" alt="image pixel" />
                     <div class="music__copyright">
-                    <span style="line-height:54px;vertical-align:top;">Lyrics licensed by </span><img src="https://www.azlyrics.com/images/mxm.png" width="184" height="54" alt="MusixMatch">
+                    <span style="line-height:54px;vertical-align:top;">Lyrics licensed by </span><img src="../img/mxm.png" width="184" height="54" alt="MusixMatch">
                     </div>
                     `}
         </div>
@@ -902,36 +886,6 @@ showAboutUs.addEventListener("click", ()=>{
 closeBtn.addEventListener("click", ()=>{
     modal.close();
 });
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
 
 },{}]},["gRY1p","ebWYT"], "ebWYT", "parcelRequire5dde")
 
