@@ -1,6 +1,6 @@
 const API_URL = "https://api.musixmatch.com/ws/1.1/";
-const apiKey = `${process.env.MUSIX_API_KEY}`;
-const apiKeyGen = `${process.env.GENIUS_API_KEY}`;
+// const apiKey = `${process.env.MUSIX_API_KEY}`;
+// const apiKeyGen = `${process.env.GENIUS_API_KEY}`;
 const errorMessage = "We couldn't find lyrics. try something else ...";
 // Search Selector
 const searchForm = document.querySelector(".search");
