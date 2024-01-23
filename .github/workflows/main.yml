@@ -30,4 +30,4 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: /  # Make sure this matches the folder where your compiled files are
+        FOLDER: dist  # Make sure this matches the folder where your compiled files are
