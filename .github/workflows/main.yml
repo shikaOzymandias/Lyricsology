@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master-g
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install Dependencies
+      run: |
+        npm install
+      env:
+        GENIUS_API_KEY: ${{ secrets.GENIUS_API_KEY }}
+        MUSIX_API_KEY: ${{ secrets.MUSIX_API_KEY }}
+
+    - name: Build
+      run: |
+        npm run build
+        ls -R  # List all files and directories to verify the presence of the 'dist' folder
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: dist  # Make sure this matches the folder where your compiled files are

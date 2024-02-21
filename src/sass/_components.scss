@@ -31,6 +31,41 @@
   }
 }
 
+.btn--inline {
+  color: $color-primary;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border: none;
+  background-color: $color-grey-light-1;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+
+  svg {
+    height: 1.6rem;
+    width: 1.6rem;
+    fill: currentColor;
+    margin: 0 0.2rem;
+  }
+
+  span {
+    margin: 0 0.4rem;
+  }
+
+  &:hover {
+    color: $color-grad-2;
+    background-color: $color-grey-light-2;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
 .message,
 .error {
   max-width: 40rem;
@@ -58,13 +93,13 @@
   height: 8rem;
   --g1: conic-gradient(
     from 90deg at left 3px top 3px,
-    #008080 90deg,
-    #008080 0
+    $color-grad-2 90deg,
+    $color-grad-2 0
   );
   --g2: conic-gradient(
     from -90deg at bottom 3px right 3px,
-    #008080 90deg,
-    #008080 0
+    $color-grad-2 90deg,
+    $color-grad-2 0
   );
 
   background: var(--g1), var(--g1), var(--g1), var(--g2), var(--g2), var(--g2);
@@ -73,8 +108,10 @@
   animation: s9 1s infinite;
 }
 
+// Size of each elements in spinner
 $spinner-size: 2rem;
 
+// Spinner animation
 @keyframes s9 {
   0% {
     background-size:
@@ -106,4 +143,27 @@ $spinner-size: 2rem;
       $spinner-size 50%,
       $spinner-size 50%;
   }
+}
+
+.u-center-text {
+  text-align: center !important;
+}
+
+.u-margin-bottom-small {
+  margin-bottom: 1.5rem !important;
+}
+
+.u-margin-bottom-medium {
+  margin-bottom: 4rem !important;
+}
+
+.u-margin-bottom-big {
+  margin-bottom: 8rem !important;
+}
+
+.u-margin-top-big {
+  margin-top: 8rem !important;
+}
+.u-margin-top-huge {
+  margin-top: 10rem !important;
 }
