@@ -10,13 +10,12 @@ let numResults = 50; // numbers of results - range is 0 - 100
 const trackContainer = document.querySelector(".music");
 const headEl = document.getElementsByTagName("head")[0];
 // pagination selector
-const paginationContainer = document.querySelector(".pagination");
+const paginationContainer = document.querySelector(".pages");
 // modal selectors
 const modal = document.querySelector(".modal");
 const showAboutUs = document.querySelector(".nav__btn--about-us");
 const closeBtn = document.querySelector(".modal__btn-close");
 
-console.log(`${process.env.MUSIX_API_KEY}`);
 let state = {
   music: {},
   search: {
@@ -60,10 +59,6 @@ const renderSpinner = function (parentElement) {
 };
 
 const renderError = function (parentElement, message = errorMessage) {
-  if (message.includes("is not valid JSON")) {
-    message = "There is some problem with Genius Api. Try again later.";
-  }
-
   const markup = `
           <div class="error">
             <div>
@@ -153,8 +148,8 @@ const loadLyrics = async function () {
 
     const resGen = await fetch(searchUrl);
     const dataGen = await resGen.json();
-    console.log(resGen);
-    console.log(dataGen);
+    console.log(dataGen.response.hits[0]);
+
     let result = {};
 
     if (dataGen.response.hits.length !== 0) {
@@ -243,7 +238,7 @@ const markupPagination = function () {
 
     <button
       data-goto="${classModifier === "prev" ? curPage - 1 : curPage + 1}"
-      class="pagination__btn btn--inline pagination__btn--${classModifier}">
+      class="pages__btn pagination__btn--${classModifier}">
 
       ${classModifier === "next" ? `<span>Page ${curPage + 1}</span>` : ""}
       
@@ -318,7 +313,7 @@ const renderSearchResult = function (page = state.search.page) {
 
 const loadPagination = function () {
   paginationContainer.addEventListener("click", function (e) {
-    const btn = e.target.closest(".pagination__btn");
+    const btn = e.target.closest(".pages__btn");
     if (!btn) return;
 
     const goToPage = +btn.dataset.goto;
