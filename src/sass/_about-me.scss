@@ -9,8 +9,20 @@
   box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.25);
   border-radius: 9px;
   padding: 3rem 6rem;
+
+  a {
+    color: $color-grey-dark-1;
+    letter-spacing: 1px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease-out;
+    &:hover {
+      color: $color-primary;
+      letter-spacing: 5px;
+    }
+  }
   &[open] {
-    animation: fade-in 0.9s ease-out;
+    animation: fade-in 0.6s ease-out;
   }
 
   &[open]::backdrop {
